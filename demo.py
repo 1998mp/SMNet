@@ -17,8 +17,27 @@ from utils import convert_weights_cuda_cpu
 from semseg.rednet import RedNet
 
 
+# Eredeti demo
+# env = '17DRP5sb8fy_0'
 
-env = '17DRP5sb8fy_0'
+
+
+# Azert nem mukodik, mert nincs rola info a data/semmap_GT_info.json-ben.
+# env = '2azQ1b91cZZ_0'
+
+# Info a data/semmap_GT_info.json-ben:
+# "JF19kD82Mey_1": {"dim": [1094, 0, 569], "central_pos": [6.05091, 0.0, 3.39755], "map_world_shift": [-4.88678, 0.0, -2.29368], "y_min_value": 3.1937811374664307}
+
+# Ezeknel meg elfogy a memoria.
+# env = 'JF19kD82Mey_1'
+# env = '5q7pvUzZiYa_1'
+
+# Mukodik
+env = '2t7WUuJeko7_0'
+
+
+
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

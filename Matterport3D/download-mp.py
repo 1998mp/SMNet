@@ -70,7 +70,7 @@ def download_release(release_scans, out_dir, file_types):
 def download_file(url, out_file):
     out_dir = os.path.dirname(out_file)
     if not os.path.isfile(out_file):
-        print '\t' + url + ' > ' + out_file
+        print('\t' + url + ' > ' + out_file)
         fh, out_file_tmp = tempfile.mkstemp(dir=out_dir)
         f = os.fdopen(fh, 'w')
         f.close()
@@ -97,6 +97,8 @@ def download_task_data(task_data, out_dir):
             file = TASK_FILES[task_data_id]
             for filepart in file:
                 url = BASE_URL + RELEASE_TASKS + '/' + filepart
+                print("URL:)")
+                print(url)
                 localpath = os.path.join(out_dir, filepart)
                 localdir = os.path.dirname(localpath)
                 if not os.path.isdir(localdir):
