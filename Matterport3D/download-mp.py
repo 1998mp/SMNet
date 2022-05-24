@@ -6,7 +6,8 @@ import argparse
 import collections
 import os
 import tempfile
-import urllib
+#import urllib # Python2
+import urllib.request # Python3
 
 BASE_URL = 'http://kaldir.vc.in.tum.de/matterport/'
 RELEASE = 'v1/scans'
@@ -51,10 +52,14 @@ TASK_FILES = {
 
 
 def get_release_scans(release_file):
-    scan_lines = urllib.urlopen(release_file)
+    #scan_lines = urllib.urlopen(release_file) # Python2
+    scan_lines = urllib.request.urlopen(release_file).readlines() # Python3
+    print('Scan IDs: ')
     scans = []
     for scan_line in scan_lines:
-        scan_id = scan_line.rstrip('\n')
+        #scan_id = scan_line.rstrip('\n') # Python2
+        scan_id = scan_line.decode().rstrip('\n') # Python3
+        print('  ' + scan_id)
         scans.append(scan_id)
     return scans
 
@@ -74,7 +79,8 @@ def download_file(url, out_file):
         fh, out_file_tmp = tempfile.mkstemp(dir=out_dir)
         f = os.fdopen(fh, 'w')
         f.close()
-        urllib.urlretrieve(url, out_file_tmp)
+        #urllib.urlretrieve(url, out_file_tmp) # Python2
+        urllib.request.urlretrieve(url, out_file_tmp) # Python3
         os.rename(out_file_tmp, out_file)
     else:
         print('WARNING: skipping download of existing file ' + out_file)
@@ -85,7 +91,9 @@ def download_scan(scan_id, out_dir, file_types):
         os.makedirs(out_dir)
     for ft in file_types:
         url = BASE_URL + RELEASE + '/' + scan_id + '/' + ft + '.zip'
+        print(url)
         out_file = out_dir + '/' + ft + '.zip'
+        print(out_file)
         download_file(url, out_file)
     print('Downloaded scan ' + scan_id)
 
@@ -95,17 +103,19 @@ def download_task_data(task_data, out_dir):
     for task_data_id in task_data:
         if task_data_id in TASK_FILES:
             file = TASK_FILES[task_data_id]
+            print(file)
             for filepart in file:
                 url = BASE_URL + RELEASE_TASKS + '/' + filepart
-                print("URL:)")
-                print(url)
+                print("URL: " + url)
                 localpath = os.path.join(out_dir, filepart)
+                print(localpath)
                 localdir = os.path.dirname(localpath)
                 if not os.path.isdir(localdir):
                     os.makedirs(localdir)
                     download_file(url, localpath)
                     print('Downloaded task data ' + task_data_id)
-
+        else:
+            print('unexpected task_data_id: ' + str(task_data_id))
 
 def main():
     parser = argparse.ArgumentParser(description=
@@ -131,7 +141,8 @@ def main():
     print(TOS_URL)
     print('***')
     print('Press any key to continue, or CTRL-C to exit.')
-    key = raw_input('')
+    #key = raw_input('') # Python2
+    key = input('') # Python3
 
     release_file = BASE_URL + RELEASE + '.txt'
     release_scans = get_release_scans(release_file)
@@ -145,7 +156,8 @@ def main():
         else:
             print('ERROR: Unrecognized task data id: ' + args.task_data)
         print('Done downloading task_data for ' + str(args.task_data))
-        key = raw_input('Press any key to continue on to main dataset download, or CTRL-C to exit.')
+        #key = raw_input('Press any key to continue on to main dataset download, or CTRL-C to exit.') # Python2
+        key = input('Press any key to continue on to main dataset download, or CTRL-C to exit.') # Python3
 
     # download specific file types?
     if args.type:
@@ -169,9 +181,11 @@ def main():
         print('Note that existing scan directories will be skipped. Delete partially downloaded directories to re-download.')
         print('***')
         print('Press any key to continue, or CTRL-C to exit.')
-        key = raw_input('')
+        #key = raw_input('') # Python2
+        key = input('') # Python3
         out_dir = os.path.join(args.out_dir, RELEASE)
         download_release(release_scans, out_dir, file_types)
 
-if __name__ == "__main__": main()
+if __name__ == "__main__":
+    main()
 
