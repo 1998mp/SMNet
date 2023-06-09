@@ -171,17 +171,20 @@ class SemmapDecoder(nn.Module):
         super(SemmapDecoder, self).__init__()
 
         self.layer = nn.Sequential(# nn.Conv2d(feat_dim, 128, kernel_size=7, stride=1, padding=3, bias=False),
-				   nn.Conv2d(feat_dim, 128, kernel_size=3, stride=1, padding=1, bias=False),
+                                   nn.Conv2d(feat_dim, 128, kernel_size=3, stride=1, padding=1, bias=False),
                                    nn.BatchNorm2d(128),
                                    nn.ReLU(inplace=True),
                                    nn.Conv2d(128, 64, kernel_size=3, stride=1, padding=1, bias=False),
                                    nn.BatchNorm2d(64),
                                    nn.ReLU(inplace=True),
                                    # nn.Conv2d(64, 48, kernel_size=3, stride=1, padding=1, bias=False),
-				   nn.Conv2d(64, 32, kernel_size=3, stride=1, padding=1, bias=False),
+                                   # nn.Conv2d(64, 32, kernel_size=3, stride=1, padding=1, bias=False),
                                    # nn.BatchNorm2d(48),
-                                   nn.BatchNorm2d(32),
-				   nn.ReLU(inplace=True),
+                                   # nn.BatchNorm2d(32),
+                                   nn.Conv2d(64, 16, kernel_size=3, stride=1, padding=1, bias=False),
+                                   # nn.BatchNorm2d(48),
+                                   nn.BatchNorm2d(16),
+                                   nn.ReLU(inplace=True),
                                   )
 
         # self.obj_layer = nn.Sequential(nn.Conv2d(48, 48, kernel_size=3, stride=1, padding=1, bias=False),

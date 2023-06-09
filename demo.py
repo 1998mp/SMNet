@@ -22,17 +22,17 @@ from semseg.rednet import RedNet
 
 
 
-# Azert nem mukodik, mert nincs rola info a data/semmap_GT_info.json-ben.
+# It does not work, becouse there is no info in data/semmap_GT_info.json
 # env = '2azQ1b91cZZ_0'
 
-# Info a data/semmap_GT_info.json-ben:
+# Info in data/semmap_GT_info.json:
 # "JF19kD82Mey_1": {"dim": [1094, 0, 569], "central_pos": [6.05091, 0.0, 3.39755], "map_world_shift": [-4.88678, 0.0, -2.29368], "y_min_value": 3.1937811374664307}
 
-# Ezeknel meg elfogy a memoria.
+# Works with these, but it runs out of memory.
 # env = 'JF19kD82Mey_1'
 # env = '5q7pvUzZiYa_1'
 
-# Mukodik
+# Works fine
 env = '2t7WUuJeko7_0'
 
 
