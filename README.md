@@ -1,3 +1,7 @@
+# Part of my master's thesis at BME
+
+Part of my master's thesis at BME is based on the following project, I didn't start from scratch. Mátyás Pelle
+
 # Semantic-MapNet
 
 Code for the paper:
